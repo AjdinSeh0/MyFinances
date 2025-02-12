@@ -13,4 +13,5 @@
     <string name="cd">CD</string>
     <string name="loan">Loan</string>
     <string name="checking_account">Checking Account</string>
+    <string name="save">Save</string>
 </resources>

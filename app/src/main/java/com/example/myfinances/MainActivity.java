@@ -1,9 +1,13 @@
 package com.example.myfinances;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         initRadioGroup();
+        initSave();
+        initCancel();
     }
 
     private void initRadioGroup() {
@@ -64,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        // 3️⃣ Set up listener (same as before)
+
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -103,6 +109,91 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("RadioSelection", "Saved selection: " + selectedOption);
             }
         });
+    }
+
+    private void initSave() {
+        Button button = findViewById(R.id.buttonSave);
+
+        button.setOnClickListener(v -> {
+            String accountType = getSharedPreferences("MyFinancePrefs", MODE_PRIVATE)
+                    .getString("selected_account_type", "");
+
+            String accountNumber = ((EditText) findViewById(R.id.editAccountNum)).getText().toString();
+            String initialBalance = ((EditText) findViewById(R.id.editInitialBal)).getText().toString();
+            String currentBalance = ((EditText) findViewById(R.id.editCurrentBal)).getText().toString();
+            String interestRate = ((EditText) findViewById(R.id.editInterestRate)).getText().toString();
+            String paymentAmount = ((EditText) findViewById(R.id.editPaymentAmount)).getText().toString();
+
+            EditText accountNumberEdit = findViewById(R.id.editAccountNum);
+            EditText initialBalEdit = findViewById(R.id.editInitialBal);
+            EditText currentBalEdit = findViewById(R.id.editCurrentBal);
+            EditText interestRateEdit = findViewById(R.id.editInterestRate);
+            EditText paymentAmountEdit = findViewById(R.id.editPaymentAmount);
+
+
+
+            try {
+                FinanceDBHelper dbHelper = new FinanceDBHelper(this);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                ContentValues values = new ContentValues();
+                values.put("account_number", accountNumber);
+                values.put("current_balance", currentBalance);
+
+                if (accountType.equals("CD")) {
+                    values.put("initial_balance", initialBalance);
+                    values.put("interest_rate", interestRate);
+                    db.insertOrThrow("cds", null, values);
+                } else if (accountType.equals("Loan")) {
+                    values.put("initial_balance", initialBalance);
+                    values.put("interest_rate", interestRate);
+                    values.put("payment_amount", paymentAmount);
+                    db.insertOrThrow("loans", null, values);
+                } else if (accountType.equals("Checking")) {
+                    db.insertOrThrow("checking", null, values);
+                }
+                accountNumberEdit.setText(" ");
+                initialBalEdit.setText(" ");
+                currentBalEdit.setText(" ");
+                interestRateEdit.setText(" ");
+                paymentAmountEdit.setText(" ");
+
+
+
+                db.close();
+
+                Toast.makeText(this, "Saved Successfully!", Toast.LENGTH_SHORT).show();
+                Log.d("Database", "Successfully saved data");
+
+            } catch (Exception e) {
+
+                Toast.makeText(this, "Error: Account already exists", Toast.LENGTH_LONG).show();
+                Log.e("SQL ERROR", e.toString());
+            }
+        });
+    }
+
+    private void initCancel(){
+        Button buttonCancel = findViewById(R.id.buttonCancel);
+
+        buttonCancel.setOnClickListener(v ->{
+
+            EditText accountNumberEdit = findViewById(R.id.editAccountNum);
+            EditText initialBalEdit = findViewById(R.id.editInitialBal);
+            EditText currentBalEdit = findViewById(R.id.editCurrentBal);
+            EditText interestRateEdit = findViewById(R.id.editInterestRate);
+            EditText paymentAmountEdit = findViewById(R.id.editPaymentAmount);
+
+            accountNumberEdit.setText(" ");
+            initialBalEdit.setText(" ");
+            currentBalEdit.setText(" ");
+            interestRateEdit.setText(" ");
+            paymentAmountEdit.setText(" ");
+
+
+
+        });
+
     }
 
 

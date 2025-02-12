@@ -25,10 +25,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/enter_account_number"
-        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textAccountNumber"
-        tools:ignore="Autofill,TouchTargetSizeCheck" />
+        tools:ignore="Autofill,TouchTargetSizeCheck"
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:id="@+id/textInitialBalance"
@@ -48,10 +48,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/enter_initial_balance"
-        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInitialBalance"
-        tools:ignore="Autofill,TouchTargetSizeCheck" />
+        tools:ignore="Autofill,TouchTargetSizeCheck"
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:id="@+id/textCurrentBalance"
@@ -71,10 +71,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/enter_current_balance"
-        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCurrentBalance"
-        tools:ignore="Autofill,TouchTargetSizeCheck" />
+        tools:ignore="Autofill,TouchTargetSizeCheck"
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:id="@+id/textPaymentAmount"
@@ -94,10 +94,10 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/enter_payment_amount"
-        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textPaymentAmount"
-        tools:ignore="Autofill,TouchTargetSizeCheck" />
+        tools:ignore="Autofill,TouchTargetSizeCheck"
+        android:inputType="numberDecimal"/>
 
     <EditText
         android:id="@+id/editInterestRate"
@@ -107,10 +107,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/enter_interest_rate"
-        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInterestRate"
-        tools:ignore="Autofill,TouchTargetSizeCheck" />
+        tools:ignore="Autofill,TouchTargetSizeCheck"
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:id="@+id/textInterestRate"
@@ -156,8 +156,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="157dp"
         android:layout_marginTop="52dp"
-        android:text="Save"
+        android:text="@string/save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPaymentAmount" />
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="16dp"
+        android:text="Cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
